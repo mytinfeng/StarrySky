@@ -2,14 +2,14 @@
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
 function themeConfig($form) {
-    $logoUrl = new Typecho_Widget_Helper_Form_Element_Text('logoUrl', NULL, NULL, _t('站点 LOGO 地址'), _t('并没有LOGO，在这里输入文字就是logo'));
+    $logoUrl = new Typecho_Widget_Helper_Form_Element_Text('logoUrl', NULL, NULL, _t('站点 LOGO '), _t('填写文字'));
     $form->addInput($logoUrl);
     
-    $favicon = new Typecho_Widget_Helper_Form_Element_Text('favicon', NULL, NULL, _t('站点 favicon 地址'), _t('请输入favicon地址'));
+    $favicon = new Typecho_Widget_Helper_Form_Element_Text('favicon', NULL, NULL, _t('站点 favicon 地址'), _t('请输入favicon网址，带http(s)://'));
     $form->addInput($favicon);
     
     
-    $userLogo = new Typecho_Widget_Helper_Form_Element_Text('userLogo', NULL, NULL, _t('首页头像'), _t('首页头像'));
+    $userLogo = new Typecho_Widget_Helper_Form_Element_Text('userLogo', NULL, NULL, _t('首页头像'), _t('请输入完整版图片网址，带http(s)://'));
     $form->addInput($userLogo);
     
     $userYiyan = new Typecho_Widget_Helper_Form_Element_Text('userYiyan', NULL, NULL, _t('首页展示的一言'), _t('首页展示的一言'));
@@ -84,6 +84,8 @@ function headportrait($obj){
         $arr=explode('"',$arrs);
         
         echo($arr[3]);
+        
+        
   
     }else{
         $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
@@ -221,4 +223,29 @@ function isHTTPS()
         return TRUE;
     }
     return FALSE;
+}
+
+/*文章阅读次数*/
+/*<?php echo Postviews($this); ?>*/
+function Postviews($archive) {
+    $db = Typecho_Db::get();
+    $cid = $archive->cid;
+    if (!array_key_exists('views', $db->fetchRow($db->select()->from('table.contents')))) {
+        $db->query('ALTER TABLE `'.$db->getPrefix().'contents` ADD `views` INT(10) DEFAULT 0;');
+    }
+    $exist = $db->fetchRow($db->select('views')->from('table.contents')->where('cid = ?', $cid))['views'];
+    if ($archive->is('single')) {
+        $cookie = Typecho_Cookie::get('contents_views');
+        $cookie = $cookie ? explode(',', $cookie) : array();
+        if (!in_array($cid, $cookie)) {
+            $db->query($db->update('table.contents')
+                ->rows(array('views' => (int)$exist+1))
+                ->where('cid = ?', $cid));
+            $exist = (int)$exist+1;
+            array_push($cookie, $cid);
+            $cookie = implode(',', $cookie);
+            Typecho_Cookie::set('contents_views', $cookie);
+        }
+    }
+    echo $exist == 0 ? '没人来访过' : $exist.' 个足迹';
 }

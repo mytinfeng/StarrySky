@@ -13,11 +13,15 @@ $this->need('public/header.php');
                 <h4><?php $this->title() ?></h4>
             </div>
             <div class="post-warp-info">
-                <p>作者 by <?php $this->author(); ?> / <?php $this->date(); ?> / <?php $this->commentsNum(_t('暂无评论'), _t('1 评论'), _t('%d 评论')); ?> </p>
+                <p>作者 by <?php $this->author(); ?> / <?php $this->date(); ?> / <?php $this->commentsNum(_t('暂无评论'), _t('1 评论'), _t('%d 评论')); ?> / <?php echo Postviews($this); ?></p>
             </div>
             
             <div class="post-warp-content" id="viewer_img">
                 <?php $this->content(); ?>
+            </div>
+            
+            <div class="post-tag">
+                <span class="iconfont icon-tubiao_biaoqian"></span><?php $this->tags('</a><a>', true, '无'); ?>
             </div>
             
             <div class="t-my-pl">
@@ -25,9 +29,11 @@ $this->need('public/header.php');
             </div>
             
             
+            
+            
         </div>
     </section>
-        
+    
 
 
 

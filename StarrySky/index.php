@@ -4,7 +4,7 @@
  * 
  * @package 星空写作主题
  * @author 听风 && YOU
- * @version 1.0.1
+ * @version 1.0.2
  * @link #
  */
 
@@ -23,6 +23,7 @@ $this->need('public/header.php');
                
                 <p><?php $this->options->userYiyan() ?></p>
             </div>
+
         </section>
         
 

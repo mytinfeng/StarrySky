@@ -8,28 +8,49 @@
  
 ?>
 
+
+
 <div id="nian-archives">
-    <h4 class="al_year">快速选择年份</h4>
+    <h4 class="al_year"><span class="iconfont icon-a-wenjianjiawenjian"></span>&nbsp;快速选择年份</h4>
     <ul class="al_mon_list tin-nf">
+        
 <?php  
 
 $obj = $this->widget('Widget_Contents_Post_Date');
-if($obj->have()){
-    while($obj->next()){
 ?>
-    
-    <li data-nian='<?php $obj->year(); ?>'><?php $obj->year(); ?>&nbsp;年</li>
-        
-<?
-        
+
+
+
+
+<?php 
+
+if($obj->have()){
+    $listArr = array();
+    while($obj->next()){
+    $listArr[] .= $obj->year;
     }
+    
+    $listArr = array_unique($listArr);
+
+    foreach ( $listArr as $key => $value){
+    ?>
+        <li data-nian='<?php echo $value; ?>'><?php echo $value; ?>&nbsp;年</li>
+    <?php
+    };
+    
+    
+    
 }else{
     echo '<li>无文章</li>';
 }
 
 ?>
+
+
     </ul>
 </div>
+
+
 
 
 
