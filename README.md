@@ -58,6 +58,12 @@ EditorMD是款功能强大的 Markdown 编辑器
 登陆后台，在控制台下拉菜单中点击插件进入插件管理
 找到EditorMD，点击启用
 根据需要更新设置
+
+!不要接管前台Markdown解析
+!不要接管前台Markdown解析
+!不要接管前台Markdown解析
+!不要接管前台Markdown解析
+
 #### 插件下载
 https://github.com/DT27/EditorMD
 
