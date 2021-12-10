@@ -100,7 +100,7 @@ function duNav(){
     $db = Typecho_Db::get();
     $query = $db->select()
 ->from('table.contents')
-->where('table.contents.type = ?', 'page')->order('cid',Typecho_Db::SORT_ASC);
+->where('table.contents.type = ?', 'page')->order('order',Typecho_Db::SORT_ASC);
     
     $arr =  $db->fetchAll($query);
     
